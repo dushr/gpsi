@@ -11,7 +11,7 @@ points can then be added to the created route by posting them to 'way_point'
 endpoint.
 
 A waypoint is stored in the database, with coordinates that are the ``Point``
-type available from Postgis. We also store the SRID with it, as the coordinates
+type available from Postgis. We also store the SRID (4326) with it, as the coordinates
 used as input are WGS84. (It also stores data in metres, that is always good)
 
 When we calculate the length, we create a ``Line`` type using the points that we
@@ -56,7 +56,7 @@ PYTHONPATH='.' python gpsi/runserver.py
 
 And finally, to test the code
 ```bash
-PYTHONPATH='.' nose2
+PYTHONPATH='.' nosetests
 ```
 
 ## What next?

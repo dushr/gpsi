@@ -53,8 +53,10 @@ def length(route_id):
     length = db.engine.execute(length_query).fetchone()[0]
 
     # Convert into KMs
-
-    length = length / 1000
+    if length:
+        length = length / 1000
+    else:
+        length = 0
 
     length_dict = {
         'km': length

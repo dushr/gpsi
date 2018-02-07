@@ -64,3 +64,22 @@ PYTHONPATH='.' nose2
 - Right not we do not verify the data we get when we store the waypoint. Add a way to verify that.
 - Use The ORM more, especially for the length query
 - We should accept the "CreatedAt" for the way point endpoint and store it, that way we can ensure that we are reading the points in the right order when we recreate the path.
+
+## The Longest Path
+
+The longest Path per day can be calculated using the the following query
+
+```
+    SELECT route_id, ST_Length(ST_MakeLine(ST_AsText(coordinate))::geography) as length
+    FROM way_point
+    WHERE created_at > start_date
+    AND created_at < end_date
+    GROUP BY route_id
+    ORDER BY length desc;
+```
+
+We can store this data in a new table, as it will be requested quite often
+every night using a job.
+
+However we can also calculte this data on the fly, by grouping by the created
+date too.
